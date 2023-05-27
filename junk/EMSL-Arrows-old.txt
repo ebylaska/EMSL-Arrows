@@ -1,0 +1,828 @@
+%%%%%%%%%%%%%%%%%%%%%%% file bookchapter.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[runningheads,a4paper]{llncs}
+
+\usepackage{amssymb}
+\usepackage[intlimits]{amsmath}
+\setcounter{tocdepth}{3}
+
+
+\usepackage{cmap}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage[english]{babel}
+\usepackage{cite}
+\usepackage{subfig}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes.geometric,decorations.pathmorphing,patterns}
+
+\makeatletter
+%\renewcommand{\fnum@}{Figure \thefigure}
+\makeatother
+
+
+\begin{document}
+
+\mainmatter  % start of an individual contribution
+
+% first the title is needed
+\title{Building Towards the Future in Quantum Chemistry Simulation with Accessible and Intelligently Designed Web Applications: EMSL Arrows\footnote{https://arrows.emsl.pnnl.gov, https://github.com/ebylaska/TinyArrows}}
+
+% a short form should be given in case it is too long for the running head
+\titlerunning{EMSL Arrows}
+
+% the name(s) of the author(s) follow(s) next
+%
+\author{Eric J. Bylaska}
+%
+%
+% (feature abused for this document to repeat the title also on left hand pages)
+
+% the affiliations are given next; don't give your e-mail address
+% unless you accept that it will be published
+\institute{Physical Sciences Division, Pacific Northwest National Laboratory, Richland, WA 99354}
+
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% If issues arise when submitting your manuscript, you may want to
+%% un-comment the next line.  This provides information on the
+%% version of every file you have used.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\listfiles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Place any additional macros here.  Please use \newcommand* where
+%% possible, and avoid layout-changing macros (which are not used
+%% when typesetting).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Meta-data block
+%% ---------------
+%% Each author should be given as a separate \author command.
+%%
+%% Corresponding authors should have an e-mail given after the author
+%% name as an \email command. Phone and fax numbers can be given
+%% using \phone and \fax, respectively; this information is optional.
+%%
+%% The affiliation of authors is given after the authors; each
+%% \affiliation command applies to all preceding authors not already
+%% assigned an affiliation.
+%%
+%% The affiliation takes an option argument for the short name.  This
+%% will typically be something like "University of Somewhere".
+%%
+%% The \altaffiliation macro should be used for new address, etc.
+%% On the other hand, \alsoaffiliation is used on a per author basis
+%% when authors are associated with multiple institutions.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{Eric J. Bylaska}
+\email{eric.bylaska@pnnl.gov}
+\affiliation[PNNL]
+{Physical Sciences Division, Pacific Northwest National Laboratory, Richland, WA 99354}
+\author{Duo Song}
+\email{duo.song@pnnl.gov}
+\affiliation[PNNL]
+{Physical Sciences Division, Pacific Northwest National Laboratory, Richland, WA 99354}
+
+\author{Tifany L. Torralba-Sánchez}
+\affiliation[OHSU]
+{OHSU-PSU School of Public Health (Mailcode HRC-3),Oregon Health & Science University (OHSU), 3181 SW Sam Jackson Park Road, Portland, Oregon 97239-3098}
+
+%\author{Alexandra Salter-Blanc}
+%\affiliation[OHSU]
+%{OHSU-PSU School of Public Health (Mailcode HRC-3),Oregon Health & Science University (OHSU), 3181 SW Sam Jackson Park Road, Portland, Oregon 97239-3098}
+%\altaffiliation{Environmental Remediation Scientist at Jacobs, Portland, Oregon}
+
+\author{Shaun O'Leary}
+\affiliation[PNNL]
+{Environmental Molecular Sciences Laboratory, Pacific Northwest National Laboratory, Richland, WA 99354}
+
+
+\author{Paul G. Tratnyek}
+\email{tratnyek@ohsu.edu}
+\affiliation[OHSU]
+{OHSU-PSU School of Public Health (Mailcode HRC-3),Oregon Health & Science University (OHSU), 3181 SW Sam Jackson Park Road, Portland, Oregon 97239-3098}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The document title should be given as usual. Some journals require
+%% a running title from the author: this should be supplied as an
+%% optional argument to \title.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\abbreviations{Arrows}
+\keywords{Building towards the future in quantum chemistry simulation with  Molecular Modeling, Molecular Calculations, Reaction Calculations, Reaction Prediction, Chemical Workflows, Molecular Database, NWChem, DFT, PW-DFT, HF, MP2, CCSD(T), COSMO, QSAR, Environmental Chemistry, IR, NMR}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The manuscript does not need to include \maketitle, which is
+%% executed automatically.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The "tocentry" environment can be used to create an entry for the
+%% graphical table of contents. It is given here as some journals
+%% require that it is printed as part of the abstract page. It will
+%% be automatically moved as appropriate.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{tocentry}
+\begin{center}
+\includegraphics[scale=0.19]{images/ET-TOC.pdf}
+\end{center}
+\end{tocentry}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The abstract environment will automatically gobble the contents
+%% if an abstract is not used by the target journal.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+
+Despite these hugely successful theoretical developments, reliable calculations of this type require considerable theoretical expertise and computational effort and are out of reach of a wide variety of scientists and engineers.  The goal of our project is to provide DOE scientists and engineers with an open-source computational chemistry and materials tool called Arrows.  Arrows is a software package that combines NWChem, SQL and nosql databases, email, and social networks (e.g. Twitter, Tumblr) that simplifies molecular and materials modeling and makes these modeling capabilities accessible to all scientists and engineers
+
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Start the main part of the manuscript here.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+
+Computational chemistry has played an auspicious and evolving role in chemistry, material science, and biology, since the appearance of the first electronic computing systems and subsequent programmable computers in the early to mid-part of the last century.  Some of the first calculations, which were used to generate atomic form factors for x-ray and electronic scattering, had an immediate scientific impact that continues to this day.  From these beginnings, the growth and impact of the field has continued to be steady, to the point where today it has become ubiquitous across several scientific and engineer domains.  This is quite an accomplishment for a field still in its infancy, with only a handful of (mostly academic) computer programs in which a significant amount of effort has been put into implementing computation chemistry methods beyond an embryonic state. Even more impressive is that recent economic analyses have posited molecular modelling may contribute \textasciitilde1\% of the GDP of a large country.  %This remarkable for a scientific field that is still in an embryonic state.
+
+The success and versatility of computational chemistry is most likely due to its ability to probe various physical observables through the use of predictive atomic level simulations, combined with the freedom to utilize diverse external constraints and conditions to capture the larger spatial and time scales of chemical processes.  In many cases, the information gained from simulation cannot be easily obtained from experiment.  For example, even the most basic thermodynamics and kinetic properties of most known compounds and materials are unknown due to the time-consuming nature of measuring it. However, augmenting and replacing experiment with simulation is nontrivial, since simulating new materials is convoluted by the sensitivity of the processes at the macroscopic scale to the atomic scale; the unusual and unexpected bonding behaviors of the materials; the complex extreme temperature and pressure environments likely to be encountered; and the requirements that simulations be as parameter free as possible and extremely reliable. 
+
+The tools of quantum chemistry and statistical mechanics combined with advanced parallel packages such as NWChem have proved to be very effective and productive. Not surprisingly, programs that implement these types of tools make up a large fraction of DOE OS supercomputer cycles.  Even with these hugely successful theoretical developments, reliable calculations of this type require considerable theoretical expertise, computational effort, and often costly software licenses that are out of reach for many scientists, engineers, and students. 
+
+One of the biggest barriers to the use of computational chemistry today is the need for efficient and intuitive to use computer programs that can create an input deck for a molecular modeling program.  This is particularly true for open-source programs such as NWChem that are trying to stay on the cutting edge with the latest theoretical and computational developments, and as a result the complexity of these programs continues to grow unabated. For example, NWChem implements a robust and diverse set of molecular theories, including Gaussian basis set DFT, high-level chemistry methods (e.g. MP2, CCSD(T)), MD, QM/MM, plane-wave DFT, AIMD, and AIMD/MM that can estimate the thermodynamics, kinetics, and spectroscopes for molecules, nanoparticles, bio-materials, and materials.  It arguably has the most capabilities of any molecular modeling code today.  No doubt, users of NWChem and other molecular modeling programs feel like they need to take classes on how to use them, or at the very least have a certification akin to what used to be thought of as compulsory to use a popular word processor in the 1980's.  
+
+The problems with NWChem and other molecular modeling codes are that:
+\begin{itemize}
+\item Molecular modeling software is extremely complex, contains millions of lines of code, takes a long time to set up and to learn how to use. 
+\item Even the most basic input for molecular modeling software requires the use of other software to generate it.
+\item It is not uncommon for simulations to take days, weeks and even months to complete.
+\item Multiple simulations are usually needed to calculate molecular properties and reaction energies. 
+\item Because of this complexity, people unnaturally identify with codes and molecular theories, and they are hesitant to learn new codes and new molecular simulation techniques. 
+\item As a consequence, NWChem and other molecular modeling programs are not yet used by large numbers of scientists, engineers, and students who could benefit from using them.
+\end{itemize}
+
+While many groups have been trying to fill this need by developing molecular graphics programs. These interface programs are hard to design, because of the complexity and number of the programs a user might want to work with in their projects.
+
+Need to introduce intelligence
+
+
+
+ECCE Extensible Computational Chemistry Environment https://github.com/FriendsofECCE/ECCE 
+
+EMSL Arrows Evolution of Chemical and Materials Computation https://nwchemgit.github.io/EMSL_Arrows.html
+Avogadro reads cube files, generates NWChem input files, analyzes output files (including frequencies) http://avogadro.cc
+
+WebMO World Wide Web-based interface to computational chemistry packages https://www.webmo.net/ 2
+
+Jmol analyzes output and cube files http://wiki.jmol.org/index.php/NWChem
+
+Scienomics MAPS platform has a NWChem Plugin that will allow users to easily create NWChem input files. Since MAPS platform also has complex builders available, users can create complex models and then submit NWChem simulations to HPCs. MAPS also allows easy analysis of NWChem output files https://www.scienomics.com/maps-platform/simulate/quantum/nwchem-plugin/
+
+CULGI computational platform https://www.culgi.com/software/features-quantum-chemistry/
+
+Chemcraft http://www.chemcraftprog.com
+
+ASE Atomic Simulation Environment http://wiki.fysik.dtu.dk/ase
+
+Ascalaph http://www.biomolecular-modeling.com/Ascalaph/index.html
+
+MoCalc2012 http://mocalc2012.sourceforge.net/
+
+Chemissian http://www.chemissian.com/
+
+Gausssum a GUI application that can analyze the output since version 3.0 using the cclib library http://gausssum.sf.net
+
+OpenDFT is a free and open source software that brings cutting edge solid state research to the people https://github.com/JannickWeisshaupt/OpenDFT
+
+KiSThelP predicts thermodynamic properties and rate constants from NWChem results http://kisthelp.univ-reims.fr/
+
+Fiesta is a Gaussian-basis GW and Bethe-Salpeter code http://perso.neel.cnrs.fr/xavier.blase/fiesta/
+
+JANPA performs Natural Population Analysis http://janpa.sf.net
+
+CamCASP Cambridge package for Calculation of Anisotropic Site Properties https://gitlab.com/anthonyjs/camcasp https://app.ph.qmul.ac.uk/wiki/ajm:camcasp:start
+
+ChemShell is a computational chemistry environment for standard quantum chemical or force field calculations https://www.chemshell.org
+PUPIL allows developers to perform multi-scale simulations http://pupil.sf.net
+
+LICHEM interfaces between QM and MM software http://github.com/kratman/LICHEM_QMMM
+
+VENUS interfaces NWChem with chemical dynamics http://hase-group.ttu.edu/venus.html https://www.sciencedirect.com/science/article/pii/S0010465513004049
+
+VOTCA-XTP is a GW-BSE code to calculate excited state properties http://www.votca.org
+
+DP4-AI integrates NMR-AI, software for automatic processing, assignment and visualisation of raw NMR data https://github.com/KristapsE/DP4-AI
+
+Fafoom Flexible algorithm for optimization of molecules https://github.com/adrianasupady/fafoom
+
+Pymatgen Python Materials Genomics open-source Python library for materials analysis http://pymatgen.org
+
+PVSCF A parallel vibrational self-consistent field program http://pvscf.org
+
+ResLibCal A tool to compute triple-axis neutron spectrometer resolution http://ifit.mccode.org/Applications/ResLibCal/doc/ResLibCal.html
+
+SMFA General program package for performing quantum chemistry calculations on large molecules using an energy-based fragmentation approach https://github.com/mickcollins/SMFAPAC
+
+OCLIMAX Free program for simulation of inelastic neutron scattering https://sites.google.com/site/ornliceman/download
+
+Artaios A code for calculating spin-dependent electron transport properties for molecular junctions in the coherent tunneling regime https://www.chemie.uni-hamburg.de/institute/ac/arbeitsgruppen/herrmann/software/artaios.html
+
+Cuby A computational chemistry framework that provides access to various computational methods available in different software package http://cuby.molecular.cz/?page=Interfaces
+
+autoDIAS A python tool for an automated Distortion/Interaction Activation Strain Analysis https://github.com/dsvatunek/autoDIAS
+
+PolyParGen provides OPLS-AA and Amber force field parameters for polymers or large molecules http://polypargen.com
+
+BiKi Life Sciences is a suite for Molecular Dynamics and related methods in Drug Discovery http://www.bikitech.com/products/
+
+Shermo is a general code for calculating molecular thermodynamic properties http://sobereva.com/soft/shermo/
+
+QCengine is a program executor and IO standardizer for quantum chemistry.https://github.com/MolSSI/QCEngine
+
+AiiDA plugin for NWChem AiiDA is a Python infrastructure to deal with complex scientific workflows https://aiida-nwchem.readthedocs.io/
+
+cclib is a Python library for parsing and interpreting the results of computational chemistry packages https://cclib.github.io/
+
+CHARMM can perform combined Quantum Mechanical and Molecular Mechanics simulations using NWChem https://www.charmm.org/charmm/documentation/by-version/c42b1/params/doc/nwchem/
+
+kMap is a program for simulation and data analysis in photoemission tomography https://github.com/brands-d/kMap
+
+QMCube is a Python suite focused on multiscale QM/MM simulations of biological systems https://github.com/sergio-marti/qm3
+
+autodE is a Python module designed for the automated generation of reaction profiles https://duartegroup.github.io/autodE
+
+GoodVibes is a Python program to compute thermochemical data from electronic structure calculations https://github.com/bobbypaton/GoodVibes
+
+ChemDyME is a Kinetically Steered, Automated Mechanism Generation Through Combined Molecular Dynamics and Master Equation Calculations https://github.com/RobinShannon/ChemDyME
+
+xtbdft is a wrapper script for multi-level molecular modelling powered by CREST/GFN2-XTB and NWChem (DFT) https://github.com/sibo/xtbdft
+
+OctaDist is an inorganic chemistry and crystallography program for computing the distortion parameters in coordination complexes https://octadist.github.io
+
+PyADF is a scripting framework for multiscale quantum chemistry https://github.com/chjacob-tubs/pyadf-releases
+
+
+gOpenMol https://web.archive.org/web/20090518024059/http://www.csc.fi/english/pages/g0penMol
+
+Molden https://www3.cmbi.umcn.nl/molden/
+
+Molekel http://ugovaretto.github.io/molekel/
+
+GaussView http://www.gaussian.com/g_prod/gv5.htm
+
+VMD http://www.ks.uiuc.edu/Research/vmd
+
+VESTA http://jp-minerals.org/vesta/en/
+
+Jamberoo http://www.jamberoo.org/
+
+Molden2AIM is a utility program which can be used to create AIM-WFN, AIM-WFX, and NBO-47 files from a Molden file https://github.com/zorkzou/Molden2AIM
+
+Multiwfn is a wavefunction analysis program http://sobereva.com/multiwfn
+
+CrystalExplorer is a program for Hirshfeld surface analysis, visualization and quantitative analysis of molecular crystals that can read NWChem Molden
+
+
+The success of computational chemistry is most likely due to its ability to provide a fine level of detail through the use of electronic structure and the freedom to utilize diverse external constraints and conditions makes computational chemistry an extremely versatile tool to probe various physical observables. In many cases the information gained is unique and would be difficult to obtain from experiment.  Even the most basic thermodynamics and kinetic properties of most known compounds and materials are unknown due to the time-consuming nature of measuring it.  The difficulty of simulating the thermodynamic and kinetic properties of new materials is convoluted by the sensitivity of the processes at the macroscopic scale to the atomic scale; the unusual and unexpected bonding behaviors of the materials; the complex extreme temperature and pressure environments likely to be encountered; and the requirements that simulations be as parameter free as possible and extremely reliable. 
+
+The tools of quantum chemistry and statistical mechanics combined with advanced parallel packages such as NWChem have proved to be very effective and productive. Not surprisingly, programs that implement these types of tools make up a large fraction of DOE OS supercomputer cycles.  Even with these hugely successful theoretical developments, reliable calculations of this type require considerable theoretical expertise, computational effort, and often costly software licenses that are out of reach for a large number of scientists, engineers, and students. 
+
+One of the biggest barriers to the use of computational chemistry today is the need for efficient and intuitive to use computer programs that can create an input deck for a molecular modeling program.  This is particularly true for open-source programs such as NWChem that are trying to stay on the cutting edge with the latest theoretical and computational developments, and as a result the complexity of these programs continues to grow unabated. For example, NWChem implements a robust and diverse set of molecular theories, including Gaussian basis set DFT, high-level chemistry methods (e.g. MP2, CCSD(T)), MD, QM/MM, plane-wave DFT, AIMD, and AIMD/MM that can estimate the thermodynamics, kinetics, and spectroscopies for molecules, nano-particles, bio-materials, and materials.  It arguably has the most capabilities of any molecular modeling code today.  No doubt users of NWChem and other molecular modeling programs feel like they need to take classes on how to use them, or at the very least have a certification akin to what used to be thought of as compulsory to use a popular word processor in the 1980's.  The problem with NWChem and other molecular modeling codes is that:
+\begin{itemize}
+\item Molecular modeling software is extremely complex, contains millions of lines of code, takes a long time to set up and to learn how to use. 
+\item Even the most basic input for molecular modeling software requires the use of other software to generate it. 
+\item Because of this complexity people unnaturally identify with codes and molecular theories, and they are hesitant to learn new codes and new molecular simulation techniques. 
+\item As a consequence NWChem and other molecular modeling programs are not yet used by large numbers of scientists, engineers, and students who could benefit from using them.
+\end{itemize}
+While many groups have been trying to fill this need by developing molecular graphics programs. These interface programs are hard to design, because of the complexity and number of the programs a user might want to work with in their projects.
+
+In recent years there has been a trend to develop web based interfaces to molecular modeling codes.
+
+EMSL Arrows is an open-source software that simplifies molecular and materials modeling, and makes these capabilities accessible to all scientists, engineers, and students.
+
+
+While many groups have been trying to fill this need by developing molecular graphics programs. These interface programs are hard to design, because of the complexity and number of the programs a user might want to work with in their projects, and as a result
+
+
+Yet many who could benefit from it don’t, and in many cases even relatively simple molecular calculations are subcontracted out to “Molecular Modeling Experts.”
+
+Not surprisingly, programs that implement these types of tools make up a large fraction of DOE OS supercomputer cycles. Despite these hugely successful theoretical developments, reliable calculations of this type require considerable theoretical expertise and computational effort, and are out of reach of a wide variety of scientists and engineers. 
+
+
+\section{Webpages, Web Appications and Web Services for Chemistry and Computational Workflows}
+
+Created for	A web application is designed for interaction with the end user.
+
+A website mostly consists of static content. It is publicly accessible to all the visitors.
+
+Web Applications are meant for their human interactions through views whereas Web API aka Web Services are meant for system-to-system interactions (information exchange programatically ). 
+
+
+
+\section{Overview of the Arrows Web Applications and Services}
+
+\subsection{Calculate Molecules}
+
+\subsubsection{ESMILES - An Extended Simplified mMlecular-Input Line-Entry System}
+\label{section:ESMILES}
+
+The basic input for Arrows is the combined string, 
+\begin{verbatim}
+Molecule_Input keyword1{option1} keyword2{option2} keywordN{optionN}
+\end{verbatim}
+and, it is called an “Extended SMILES” or “ESMILES” for short. The \verb|Molecule_Input| specifies the geometry for the molecule to be run.  It can be specified using a variety of formats including a SMILES string, common names, IUPAC, KEGG numbers, CAS, PubChem ids, ChemSpider ids, CheMBL, InChI strings, and XYZ string data. 
+Appended to the geometry specification keyword are a series of \verb|keyword{option}| tags that are used to enter different calculation types for a the molecule to be run, e.g. calculations using PSPW theory, CCSD(T), or PBE0 exchange correlation functional.  The following are examples of ESMILES strings:
+
+\begin{itemize}
+    \item \verb|c1ccccc1 theory{pspw} xc{lda} basis{30.0 Ry}| -- \emph{Plane-Wave DFT calculation of benzene using LDA and a cutoff energy=30.0 Ry}
+    \item \verb|CCO theory{mp2} basis{6-31G*}| -- \emph{MP2 calculation of ethanol using 6-31G* basis set})
+    \item \verb|CCO theory{ccsd(t)} basis{6-31G*}| -- \emph{CCSD(T) calculation of ethanol}
+    \item \verb|Caffeine theory{pm3}| -- \emph{PM3 calculation of caffeine}
+    \item \verb|C(Cl)(Cl)(Cl)Cl mult{3} theory{pspw4}| -- \emph{Aperiodic plane-wave DFT calculation of triplet carbon tetrachloride}
+    \item \verb|benzene theory{dft} xc{m06-2x} solvation_type{none}| -- \emph{Gas-phase M06-2x/6-31+G* calculation of benzene}
+\end{itemize}
+
+Equivalent ESMILES for CCSD(T)/6-31G* calculation of methanol
+\begin{itemize}
+   \item \verb|methyl alcohol theory{ccsd(t)} basis{6-31G*}| 
+   \item \verb|kegg=D02309 theory{ccsd(t)} basis{6-31G*}|
+   \item \verb|cas=67-56-1 theory{ccsd(t)} basis{6-31G*}|
+   \item \verb|cid=887 theory{ccsd(t)} basis{6-31G*}|  
+   \item \verb|csid=864 theory{ccsd(t)} basis{6-31G*}| 
+   \item \verb|InChI=1S/CH4O/c1-2/h2H,1H3 theory{ccsd(t)} basis{6-31G*}|  
+\end{itemize}
+
+The available keywords in an ESMILES string are: \verb|theory|, \verb|theory_property|, \verb|theory_base|, \verb|basis|, \verb|basis_property|, \verb|basis_base|, \verb|xc|, \verb|xc_property|, \verb|xc_base|, \verb|solvation_type|, \verb|charge|, \verb|mult|, \verb|xyzdata|, \verb|geometry_generation|, and \verb|calculation_type|.
+
+ESMILES Options - \verb|theory{}|, \verb|theory_property{}|, and \verb|theory_base{}|
+The default theory used is \verb|theory{dft}|. The following theories are available:
+
+\begin{itemize}
+    \item dft   -- NWChem Gaussian DFT  
+    \item pspw  -- NWChem Plane-Wave DFT (periodic boundary conditions, $\Gamma$ point)  
+    \item pspw4 -- NWChem Plane-Wave DFT (aperiodic boundary conditions)  
+    \item mp2   -- NWChem MP2 program  
+    \item ccsd(t) -- NWChem CCSD(T)  
+    \item pm3     -- Mopac7 PM3  
+    \item am1     -- Mopac7 AM1  
+    \item mindo   -- Mopac7 MINDO  
+    \item mindo3  -- Mopac7 MINDO3
+\end{itemize}
+
+
+The \verb|theory_property{}| is an optional keyword used to specify the theory used in an nmr calculation, and \verb|theory_base{}| is an optional keyword used to specify the theory of the base calculation for an MP2 or CCSD(T) calculation. By default, the \verb|theory_property| and \verb|theory_base| are defined to be the same as \verb|theory{}|.
+
+ESMILES Options - \verb|basis{}|, \verb|basis_property{}| and \verb|basis_base{}|
+The default basis used is 6-311++G(2d,2p) for the Gaussian DFT, MP2 and CCSD(T) programs. For plane-wave DFT the default basis or cutoff energy is defined to by 50.0 Hartrees or 100.0 Ry.
+
+For Gaussian basis sets, any basis set recognized by NWChem can be used, such as cc-pvdz, 6-311G, 3-21G, 6-31+G*. For plane-wave basis sets the cutoff energy can changed by just entering the number in Hartrees or Rydbergs, e.g.
+\begin{verbatim}
+CCO theory{pspw] basis{50.0}
+CCO theory{pspw} basis{100 Ry}
+\end{verbatim}
+The \verb|basis_property{}| is an optional keyword used to specify the basis set used in an nmr calculation, and basis_base{} is an optional keyword used to specify the basis set of the base calculation for an MP2 or CCSD(T) calculation. By default the \verb|basis_property| and \verb|basis_base| are defined to be the same as \verb|basis{}|.
+
+ESMILES Options - \verb|xc{}|, \verb|xc_property{}| and \verb|xc_base{}|
+Only the Gaussian and plane-wave DFT programs utilize the \verb|xc{}| keyword. The default exchange correlation functional used is \verb|xc{b3lyp}|. The following exchange correlation functions are available with the Gaussian DFT and plane-wave DFT programs.
+\begin{itemize}
+   \item lda --  local density approximation (LDA) of S.J. Vosko, L. Wilk and M. Nusair, Can. J. Phys. 58, 1200 (1980)  
+   \item pbe -- The gradient corrected exchange correlation function of J.P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996); 78 , 1396 (1997)  
+   \item blyp -- The gradient corrected exchange correlation function A.D. Becke, Phys. Rev. A 88, 3098 (1988) and C. Lee, W. Yang and R. G. Parr, Phys. Rev. B 37, 785 (1988)  
+   \item b3lyp -- the hybrid exchange correlation function of A.D. Becke, J. Chem. Phys. 98, 5648 (1993) and C. Lee, W. Yang and R. G. Parr, Phys. Rev. B 37, 785 (1988)  
+   \item pbe0 -- the hybrid exchange correlation function of C.Adamo and V.Barone, J. Chem. Phys. 110, 6158 (1999)  
+   \item m06-2x -- the hybrid meta exchange correlation function of Y. Zhao, D. G. Truhlar, J. Chem. Phys. 125, 194101 (2006).   Only available in Gaussian DFT program
+\end{itemize}
+The \verb|xc_property{}| is an optional keyword used to specify the exchange correlation potential used in an nmr calculation, and \verb|xc_base{}| is an optional keyword used to specify the exchange correlation potential of the base calculation for an MP2 or CCSD(T) calculation. By default the \verb|xc_property| and \verb|xc_base| are defined to be the same as \verb|xc{}|.
+
+ESMILES Options - \verb|solvation_type{}|
+The default solvation type is \verb|solvation_type{COSMO}|. The following solvation types are available with the Gaussian DFT, MP2 and CCSD(T) programs.
+
+\begin{itemize}
+   \item COSMO     -- The COSMO solvation model of Klampt and Shuurman
+   \item COSMO-SMD -- The extended Minnesota COSMO solvation model of Cramer et al.
+   \item None      -- Gas-phase calculation, no solvation model included in the calculations
+\end{itemize}
+
+\subsection{ESMILES Reactions}
+
+\subsection{Calculation Options}
+
+\subsection{Calculate Molecules}
+
+\subsection{Caclulate Reaction}
+
+\subsection{Calculate NMR Spectra}
+
+\subsection{Generate NWChem input, Fetch NWChem output, Fetch XYZ, Fetch JSON, and SMARTS searching}
+
+
+\subsection{Molecular and Periodic Builders}
+
+\subsection{QDK Interface}
+
+\subsection{How to Generate a Table of Reactions}
+
+\subsection{Arrows Queues}
+
+
+\section{Applications}
+
+\subsection{Enviromental Reactions}
+
+\subsubsection{Calculating hydrolysis and reduction reaction energies using different electronic structure methods.}
+
+\subsubsection{Estimating reaction path energies.}
+
+\subsubsection{Setting up and running AIMD free energy simulations}
+
+\subsection{Surface Adsorption Reactions}
+
+\subsection{AIMD Simulations and Workflows in Geochemstry}
+
+\section{Future Applications}
+
+\subsection{Using Reaction Hashes}
+
+\subsubsection{Reaction Predictions}
+
+\subsubsection{Automated reaction pathways}
+
+\subsection{Using Reaction Hashes}
+
+\section{Conclusions}
+
+
+
+The field of molecular graphics is dominated by viewers with little or no editing capabilities, such as RasMol [1], Jmol [2], PyMOL [3], VMD [4], QuteMol [5], BALLView [6], VESTA [7], and XCrySDen [8, 9], among many others. The aforementioned viewers are all freely available, and most of them are available under open-source licenses and work on the most common operating systems (Linux, Apple Mac OS X, Microsoft Windows, and BSD).
+
+
+
+EMSL Arrows is an open-source software that simplifies molecular and materials modeling, and makes these modeling capabilities accessible to all scientists, engineers, and students.
+
+
+
+
+
+In recent years there has been a variety of software to make running
+
+The goal of our project is to provide DOE scientists and engineers with an open-source computational chemistry and materials tool called Arrows.  
+
+EMSL Arrows is an open-source software that simplifies molecular and materials modeling and makes these modeling capabilities accessible to all scientists, engineers, and students
+
+that combines NWChem, SQL and nosql databases, email, and web based tools  that simplifies molecular and materials modeling and makes these modeling capabilities accessible to all scientists and engineers
+
+
+\section{Molecular Properties and Reaction Energies}
+
+
+
+While it's always fashionable to be critical of new scientific endeavors and technologies, and there have been plenty of papers and rants over the years claiming failure, an impending doom on a Gartner hype cycle plot, and basic research in molecular modeling, 
+
+and even then only if it were coupled with an experimental component
+the need for 
+
+.
+
+techniques
+
+
+"It is not uncommon to hear experimentalists from other disciplines and even modelers themselves grumbling about the unsatisfactory state of the discipline, and with good reason."
+
+Computational modeling has become an integral part of many research efforts in key application areas in chemical, physical, and biological sciences. The ability to provide a fine level of detail through the use of electronic structure and the freedom to utilize diverse external constraints and conditions makes computational modeling an extremely versatile tool to probe various physical observables of the system. In many cases the information gained from computational studies is unique and would be difficult to obtain from experiment.
+
+Electronic structure
+Predicting the behavior of novel compounds and materials requires data for the key chemical properties at the atomic scale. Even the most basic thermodynamics and kinetic properties of most known compounds and materials are unknown due to the time-consuming nature of measuring it.  
+
+As a result, the most common way to predict these properties is with empirical quantitative structure-activity relationships (e.g., QSARs). 
+
+However, the traditional approach to QSAR development (calibration with experimental data) is impractical for new compounds and materials for a wide variety of new energy strategies (e.g. nuclear waste storage, CO2 sequestration, energy storage materials, efficient catalysis) because of limitations in the availability of these materials. 
+  
+
+The difficulty of simulating the thermodynamic and kinetic properties of new materials is convoluted by the sensitivity of the processes at the macroscopic scale to the atomic scale; the unusual and unexpected bonding behaviors of the materials; the complex extreme temperature and pressure environments likely to be encountered; and the requirements that simulations be as parameter free as possible and extremely reliable. The tools of quantum chemistry and statistical mechanics combined with advanced parallel packages such as NWChem have proved to be very effective and productive.
+
+Not surprisingly, programs that implement these types of tools make up a large fraction of DOE OS supercomputer cycles. Despite these hugely successful theoretical developments, reliable calculations of this type require considerable theoretical expertise and computational effort, and are out of reach of a wide variety of scientists and engineers. 
+
+
+
+
+The goal of our project is to provide DOE scientists and engineers with an open-source computational chemistry and materials tool called Arrows.  Arrows is a software package that combines NWChem, SQL and nosql databases, email, and social networks (e.g. Twitter, Tumblr) that simplifies molecular and materials modeling and makes these modeling capabilities accessible to all scientists and engineers
+
+
+
+
+
+
+
+
+F\
+
+
+Early successes
+
+The increased usage in electronic structure methods in the past two decades has been remarkable.
+
+"The NWChem package takes a text file called an input deck which specifies a quantum chemistry problem to be solved, along with other parameters such as memory allocation settings. "
+
+
+"It is not uncommon to hear experimentalists from other disciplines and even modelers themselves grumbling about the unsatisfactory state of the discipline, and with good reason."
+"And of course, we still don't quite understand all the forces and factors that govern the binding of molecules to each other, and we don't quite understand how to capture these factors in sanitized and user-friendly computer algorithms and graphical interfaces."
+"The fact that computer-aided molecular design was hyped during its inception does not make it any less useful, and it's silly to think so." (Molecular modeling and physics: A tale of two disciplines, Scientific American, https://blogs.scientificamerican.com/the-curious-wavefunction/molecular-modeling-and-physics-a-tale-of-two-disciplines/)
+
+Although it is undeniable that "Some reservations and shortcomings notwithstanding, this review found strong and in a number of
+cases even quantifiable evidence for the transmission of impact of modelling from the research
+based to economic benefits."
+"Molecular modelling is estimated
+to account for about 6\% of the impact generated from high performance computing"
+"On the basis of the above evidence of the strong contribution of modelling to academic
+research and to value creation in industry, the macroeconomic impact has been estimated
+on the basis of data for the contribution of chemistry research to the UK economy. The
+preliminary figures suggest a value add equivalent to 1\% of GDP"
+(http://psi-k.net/docs/Economic_impact_of_modelling.pdf)
+
+We nearly got the perfect government support of pure science, but reality fell too short. My next impractical suggestion is to cut off all funding for anything to do with molecular modeling, unless it could be considered basic research—and even then only if it were coupled with an experimental component.
+https://www.eyesopen.com/ants-rants/rant-goes-on
+
+
+https://www.gartner.com/en/research/methodologies/gartner-hype-cycle
+
+The Scattering of Electrons by Atoms and Crystals.
+I. A New Theoretical Approach https://journals.iucr.org/q/issues/1957/10/00/a02113/a02113.pdf
+
+The molecular dynamics method was first introduced by Alder and Wainwright in the late 1950's (Alder and Wainwright, 1957,1959) to study the interactions of hard spheres. Many important insights concerning the behavior of simple liquids emerged from their studies. The next major advance was in 1964, when Rahman carried out the first simulation using a realistic potential for liquid argon (Rahman, 1964). The first molecular dynamics simulation of a realistic system was done by Rahman and Stillinger in their simulation of liquid water in 1974 (Stillinger and Rahman, 1974).
+
+http://www.quantum-chemistry-history.com/Hist_Dat/Buyong/The-Philosophy-of-Computational-Quantum-Chemistry.htm
+
+http://www.quantum-chemistry-history.com/HistPhil.htm
+
+
+
+Many fields such as chemistry, materials science, physics, and biology, need efficient computer programs to both build and visualize molecular structures. The field of molecular graphics is dominated by viewers with little or no editing capabilities, such as RasMol [1], Jmol [2], PyMOL [3], VMD [4], QuteMol [5], BALLView [6], VESTA [7], and XCrySDen [8, 9], among many others. The aforementioned viewers are all freely available, and most of them are available under open-source licenses and work on the most common operating systems (Linux, Apple Mac OS X, Microsoft Windows, and BSD).
+
+Computational modeling has become an integral part of many research efforts in key application areas in chemical, physical, and biological sciences. The ability to provide a fine level of detail through the use of electronic structure and the freedom to utilize diverse external constraints and conditions makes computational modeling an extremely versatile tool to probe various physical observables of the system. In many cases the information gained from computational studies is unique and would be difficult to obtain from experiment.
+
+
+
+
+
+become an integral part
+
+Predicting the behavior of novel compounds and materials requires data for the key chemical properties at the atomic scale. Even the most basic thermodynamics and kinetic properties of most known compounds and materials are unknown due to the time-consuming nature of measuring it.  As a result, the most common way to predict these properties is with empirical quantitative structure-activity relationships (e.g., QSARs). However, the traditional approach to QSAR development (calibration with experimental data) is impractical for new compounds and materials for a wide variety of new energy strategies (e.g. nuclear waste storage, CO2 sequestration, energy storage materials, efficient catalysis) because of limitations in the availability of these materials.  
+
+The difficulty of simulating the thermodynamic and kinetic properties of new materials is convoluted by the sensitivity of the processes at the macroscopic scale to the atomic scale; the unusual and unexpected bonding behaviors of the materials; the complex extreme temperature and pressure environments likely to be encountered; and the requirements that simulations be as parameter free as possible and extremely reliable. The tools of quantum chemistry and statistical mechanics combined with advanced parallel packages such as NWChem have proved to be very effective and productive. Not surprisingly, programs that implement these types of tools make up a large fraction of DOE OS supercomputer cycles.
+
+Despite these hugely successful theoretical developments, reliable calculations of this type require considerable theoretical expertise and computational effort and are out of reach of a wide variety of scientists and engineers.  The goal of our project is to provide DOE scientists and engineers with an open-source computational chemistry and materials tool called Arrows.  Arrows is a software package that combines NWChem, SQL and nosql databases, email, and social networks (e.g. Twitter, Tumblr) that simplifies molecular and materials modeling and makes these modeling capabilities accessible to all scientists and engineers
+
+The difficulty of simulating the thermodynamic and kinetic properties of new materials is convoluted by the sensitivity of the processes at the macroscopic scale to the atomic scale; the unusual and unexpected bonding behaviors of the materials; the complex extreme temperature and pressure environments likely to be encountered; and the requirements that simulations be as parameter free as possible and extremely reliable. The tools of quantum chemistry and statistical mechanics combined with advanced parallel packages such as NWChem have proved to be very effective and productive. Not surprisingly, programs that implement these types of tools make up a large fraction of DOE OS supercomputer cycles. Despite these hugely successful theoretical developments, reliable calculations of this type require considerable theoretical expertise and computational effort, and are out of reach of a wide variety of scientists and engineers. 
+
+The NWChem molecular modeling software implements a robust and diverse set of molecular theories that can estimate the thermodynamics and kinetics of molecules and materials.  It arguably has the most capabilities of any molecular modeling code today. Yet many who could benefit from it don’t, and in many cases even relatively simple molecular calculations are subcontracted out to “Molecular Modeling Experts.”  The problem with NWChem and other molecular modeling codes is that:
+\begin{itemize}
+\item Molecular modeling software is extremely complex, contains millions of lines of code, takes a long time to set up and to learn how to use. 
+\item Even the most basic input for molecular modeling software requires the use of other software to generate it. 
+\item Because of this complexity people unnaturally identify with codes and molecular theories, and they are hesitant to learn new codes and new molecular simulation techniques. 
+\item As a consequence NWChem (and other molecular modeling programs) is not yet used by large numbers of scientists, engineers, and students. 
+\end{itemize}
+
+
+
+\section{Molecular Properties}
+
+\url{https://arrows.emsl.pnnl.gov/api/molecule/}``$\mathit{esmiles}$''
+
+\subsection{Low Frequency Modeling and Hindered Rotors}
+
+\subsection{IR and NMR}
+
+\section{Reaction Energies}
+
+\section{Other}
+
+\subsection{Spreadsheet Interface}
+
+
+
+\subsection{Reaction Prediction}
+
+The basic input is a chemical reaction where the molecules are specified using smiles strings or esmiles strings, e.g.
+
+The results contain both gas phase and solution phase reaction energies. The default level of theory used in these calculations is b3lyp/6-311++G(2d,2p) and the default solvation model is COSMO. The returned email will contain the following output.
+
+The reaction output for the chemical reaction contains the gas phase reaction energy, gas-phase reaction enthalpy, gas-phase reaction free energy, change in solvation energy, and the solution phase reaction free energy. The energy values are given in kcal/mol, kj/mol, and Hartrees.. Besides the energies the output also provides several rows of information about the calculation:
+\begin{itemize}
+   \item first row: the reaction input parsed
+   \item second row: the arrows ids used for the compounds in the reaction
+   \item third row: the iupac names of the compounds if available.  If not available the systems will default to using smiles  strings
+   \item fourth- rows: the chemical reaction is written using the esmiles notation.  
+\end{itemize}
+
+The esmiles notation contains all the information about the calculations of the compounds. In this example, theory used was dft, basis was 6-311++G(2d,2p), the exchange correlation, the solvation type was cosmo. The charge and multiplicity of the molecules are also given. The value in the nf{} tag contains the number of imaginary frequencies in the vibrational calculation for the molecule.
+
+
+
+A variety of other inputs to describe the chemical structure besides smiles can be used, including common names, iupac, kegg numbers, cas, pubchem ids, chemspider ids, and InChI strings. The common names, iupac and InChI strings are entered as replacements to the smiles strings, and the kegg, cas, pubchem, and csid inputs are entered as kegg=value, cas=value, cid=value, csid=value where value is the id. The chemical structure input types can be mixed and matched in the reaction input. The following reaction inputs are all equivalent.
+\begin{verbatim}
+trichloromethanol + methane --> chloroform + methyl alcohol
+trichloromethanol + C --> chloroform + kegg=D02309
+trichloromethanol + C --> chloroform + cas=67-56-1
+trichloromethanol + C --> chloroform + cid=887
+trichloromethanol + C --> chloroform + csid=864
+trichloromethanol + C --> chloroform + InChI=1S/CH4O/c1-2/h2H,1H3
+\end{verbatim}
+
+\begin{verbatim}
+ https://arrows.emsl.pnnl.gov/api/reaction/"trichloromethanol + methane --> chloroform + methyl alcohol"
+\end{verbatim}
+
+\url{https://arrows.emsl.pnnl.gov/api/reaction/}``$\mathit{esmiles}$\,$\mathit{reaction}$''
+
+\framebox[1.0\textwidth]{
+\href{https://arrows.emsl.pnnl.gov/api/reaction/"trichloromethanol + methane --> chloroform + methyl alcohol"}{trichloromethanol + methane $--\textgreater$ chloroform + methyl alcohol}}
+
+
+A variety of chemical reaction pathway prediction toolboxes have become available in recent years.  The development of rules-based systems like EPA-CTS(https://www.epa.gov/nerl/) and EAWAG-BBD (http://eawag-bbd.ethz.ch/predict/), KinBot {Zádor, 2013 #5}, and RMG {Suleimanov, 2015 #4} ultimately can provide a universal solution to path pathway prediction.  However, these methods require lots of input and detailed knowledge of the chemistries being modeled.  As a result, these developments are spanning decades, even though the underlying computing hardware needed to run these methods is not changing.  Another approach for pathway prediction is to use brute force combinatorics methods, which generate possible reaction mechanisms with electronic structure calculations to evaluate the reaction pathways. Brute force methods combinatorically break N bonds and make M bonds, where M and N are defined to be relatively small to limit the number of results. Because of the large number of products produced even with M,N< 4, these approaches need to be augmented with quick energetic filters such as machine-learning potentials (i.e., Ampe) and Benson group methods {Suleimanov, 2015 #4}. 
+
+Recently we have developed a learning approach predicting reactions.  This is a predicate calculus learning approach {McDermott, 1985 #3} based on defining canonical reaction hashes.  These hashes classify reactions by defining the connectivity relative to a reaction coordinate.  Hashes can be generated for larger systems by restricting how far the connectivity is spanned.  Given the adjacency matrix of a chemical system, a reaction hash is defined by specifying the type of reaction (e.g., A+B-->AB, AB+C-->AC+B, AB+CD-->AC+BD, EA+BCD-->AB+CDE, ...) and the indexes of atoms involved in the reaction coordinate.  
+
+\begin{figure*}[ht]
+ \centering
+\includegraphics[scale=1.1]{images/reaction_hashes.png}
+\caption{Illustration of the range of integration needed to evaluate Eq.~\ref{hf_kernel} for $\Gamma$ point calculations (left) and Monkhorst-Pack sampling calculations (right).}
+\label{fig.ss.aimd}
+\end{figure*}
+
+Canonical hashes for a balanced chemical reaction can be generated using the algorithm illustrated in Fig. xxx.  These canonical hashes can be used to find products given the reactants, and to define initial reaction pathways for Nudged Elastic Band (NEB) {Henkelman, 2000 #1} and string calculations {Weinan, 2002 #2}.  By making a database of reaction hashes from a set of balanced chemical reactions, it is possible to generate future chemical reactions by filtering the hash to reduce how far it spans the chemical graph.  This reaction learning capability is already available in EMSL Arrows, and it will be used to make a reaction database for borane chemistry.   In addition, we will extend this "reaction learning" capability to make decisions based on reaction barriers and reaction energies, generalize the reaction hashes to explicitly consider interfaces and surfaces, and include in it brute force combinatorics methods that are guided using the Ampe potential capability being developed as part of this project.
+
+
+\subsection{Quantum Computing}
+
+Quantum computers hold great promise for chemistry and material science. These new methods, while potentially powerful, can be challenging to deploy for many real-world problems. Setting aside the availability of quantum hardware, and the difficulty of controlling said devices, it is nontrivial to program quantum devices to achieve a desired effect. Paralleling the history of classical computing, quantum computing requires significant software development effort in order to make it tractable for domain experts to apply quantum resources to their problems. This need has motivated the recent development of a variety of quantum programming languages [citation needed], each of which makes a different set of quantum software development tasks more feasible. Building on this, a number of different quantum chemistry libraries have been developed in or for use with quantum programming frameworks, each focusing on a different set of quantum chemistry tasks.
+
+In this paper, we are interested in the goal of allowing quantum chemistry experts to readily use a fault-tolerant quantum computer once one becomes available. We accordingly focus on these future applications as well as de- veloping technologies that allow us to simulate and profile resources needed for fault-tolerant quantum simulations today. 
+
+Due to the fact that the quantum simulation software we provide interacts only with the underlying quantum error correcting code and in turn the physical qubits by interacting through an abstraction that we call a simulator, the simulator can be easily swapped with genuine hardware which guarantees that our code can be reused once fault tolerant quantum hardware becomes available. 
+
+Moreover, we will require that our solutions are amenable to use by domain experts in quantum chemistry, without necessarily requiring strong domain expertise in quantum computing and quantum algorithms. This focus is especially critical as we transition from preliminary investigations such as the use of quantum devices to study ground-state energies of relatively simple molecules to a more applied focus, studying higher-energy properties and more complicated systems.
+
+
+The web page \url{https://arrows.emsl.pnnl.gov/api/qsharp_chem} uses EMSL Arrows to generate a YAML file containing the 1-electron and 2-electron integrals over a user defined select-CI orbital subspace. This YAML file is used by the Microsoft Quantum Development Kit chemistry library for quantum chemistry simulations. . With this webpage, a molecule can be entered into EMSL Arrows using either an esmiles string, a 2D molecular builder, a 3D molecular builder, or as a NWChem input deck.
+
+
+
+\begin{figure*}[ht]
+ \centering
+\includegraphics[scale=0.5]{images/hf-orbs.pdf}
+\caption{Illustration of the range of integration needed to evaluate Eq.~\ref{hf_kernel} for $\Gamma$ point calculations (left) and Monkhorst-Pack sampling calculations (right).}
+\label{fig.ss.aimd}
+\end{figure*}
+
+The next easiest way to generate a Broombridge formatted YAML file is to use the EMSL Arrows Builder for the Microsoft Quantum Development Kit, which is a web-based frontend to NWChem, to generate new Broombridge-formated molecular input files. EMSL Arrows and instructions for how to use it to generate Broombridge YAML files are located at . EMSL Arrows is a revolutionary approach to materials and chemical simulations that uses NWChem and chemical computational databases to make materials and chemical mod- eling accessible via a broad spectrum of digital communications including posts to web APIs, and traditional email. With this webpage, a molecule can be entered into EMSL Arrows using either an esmiles string, a 2D molecular builder, a 3D molecular builder, or as a NWChem input deck.
+
+
+\subsection{AIMD Simulations and Workflows in Geochemstry and Catalysis Chemistry}
+
+\begin{figure*}[ht]
+\includegraphics[width=\textwidth]{images/AIMD-EXAFS.png}
+\caption{Structures for the .}
+\label{fig.app.aimd-exafs}
+\end{figure*}
+
+ET Stuff
+\begin{figure*}[ht]
+\includegraphics[width=0.8\textwidth]{images/etPicture1.png}
+\caption{Structures for the .}
+\label{fig.app.aimd-exafs}
+\end{figure*}
+\subsubsection{Surface Adsorption Reactions}
+
+
+
+
+\subsubsection{Introduction to ESMILES - How to Change Calculation Theories}
+\label{section:ESMILES}
+
+The basic input for Arrows is the combined string, 
+\begin{verbatim}
+Molecule_Input keyword1{option1} keyword2{option2} keywordN{optionN}
+\end{verbatim}
+and, it is called an “Extended SMILES” or “ESMILES” for short. The \verb|Molecule_Input| specifies the geometry for the molecule to be run.  It can be specified using a variety of formats including a SMILES string, common names, IUPAC, KEGG numbers, CAS, PubChem ids, ChemSpider ids, CheMBL, InChI strings, and XYZ string data. 
+Appended to the geometry specification keyword are a series of \verb|keyword{option}| tags that are used to enter different calculation types for a the molecule to be run, e.g. calculations using PSPW theory, CCSD(T), or PBE0 exchange correlation functional.  The following are examples of ESMILES strings:
+
+\begin{itemize}
+    \item \verb|c1ccccc1 theory{pspw} xc{lda} basis{30.0 Ry}| -- \emph{Plane-Wave DFT calculation of benzene using LDA and a cutoff energy=30.0 Ry}
+    \item \verb|CCO theory{mp2} basis{6-31G*}| -- \emph{MP2 calculation of ethanol using 6-31G* basis set})
+    \item \verb|CCO theory{ccsd(t)} basis{6-31G*}| -- \emph{CCSD(T) calculation of ethanol}
+    \item \verb|Caffeine theory{pm3}| -- \emph{PM3 calculation of caffeine}
+    \item \verb|C(Cl)(Cl)(Cl)Cl mult{3} theory{pspw4}| -- \emph{Aperiodic plane-wave DFT calculation of triplet carbon tetrachloride}
+    \item \verb|benzene theory{dft} xc{m06-2x} solvation_type{none}| -- \emph{Gas-phase M06-2x/6-31+G* calculation of benzene}
+\end{itemize}
+
+Equivalent ESMILES for CCSD(T)/6-31G* calculation of methanol
+\begin{itemize}
+   \item \verb|methyl alcohol theory{ccsd(t)} basis{6-31G*}| 
+   \item \verb|kegg=D02309 theory{ccsd(t)} basis{6-31G*}|
+   \item \verb|cas=67-56-1 theory{ccsd(t)} basis{6-31G*}|
+   \item \verb|cid=887 theory{ccsd(t)} basis{6-31G*}|  
+   \item \verb|csid=864 theory{ccsd(t)} basis{6-31G*}| 
+   \item \verb|InChI=1S/CH4O/c1-2/h2H,1H3 theory{ccsd(t)} basis{6-31G*}|  
+\end{itemize}
+
+The available keywords in an ESMILES string are: \verb|theory|, \verb|theory_property|, \verb|theory_base|, \verb|basis|, \verb|basis_property|, \verb|basis_base|, \verb|xc|, \verb|xc_property|, \verb|xc_base|, \verb|solvation_type|, \verb|charge|, \verb|mult|, \verb|xyzdata|, \verb|geometry_generation|, and \verb|calculation_type|.
+
+ESMILES Options - \verb|theory{}|, \verb|theory_property{}|, and \verb|theory_base{}|
+The default theory used is \verb|theory{dft}|. The following theories are available:
+
+\begin{itemize}
+    \item dft   -- NWChem Gaussian DFT  
+    \item pspw  -- NWChem Plane-Wave DFT (periodic boundary conditions, $\Gamma$ point)  
+    \item pspw4 -- NWChem Plane-Wave DFT (aperiodic boundary conditions)  
+    \item mp2   -- NWChem MP2 program  
+    \item ccsd(t) -- NWChem CCSD(T)  
+    \item pm3     -- Mopac7 PM3  
+    \item am1     -- Mopac7 AM1  
+    \item mindo   -- Mopac7 MINDO  
+    \item mindo3  -- Mopac7 MINDO3
+\end{itemize}
+
+
+The \verb|theory_property{}| is an optional keyword used to specify the theory used in an nmr calculation, and \verb|theory_base{}| is an optional keyword used to specify the theory of the base calculation for an MP2 or CCSD(T) calculation. By default, the \verb|theory_property| and \verb|theory_base| are defined to be the same as \verb|theory{}|.
+
+ESMILES Options - \verb|basis{}|, \verb|basis_property{}| and \verb|basis_base{}|
+The default basis used is 6-311++G(2d,2p) for the Gaussian DFT, MP2 and CCSD(T) programs. For plane-wave DFT the default basis or cutoff energy is defined to by 50.0 Hartrees or 100.0 Ry.
+
+For Gaussian basis sets, any basis set recognized by NWChem can be used, such as cc-pvdz, 6-311G, 3-21G, 6-31+G*. For plane-wave basis sets the cutoff energy can changed by just entering the number in Hartrees or Rydbergs, e.g.
+\begin{verbatim}
+CCO theory{pspw] basis{50.0}
+CCO theory{pspw} basis{100 Ry}
+\end{verbatim}
+The \verb|basis_property{}| is an optional keyword used to specify the basis set used in an nmr calculation, and basis_base{} is an optional keyword used to specify the basis set of the base calculation for an MP2 or CCSD(T) calculation. By default the \verb|basis_property| and \verb|basis_base| are defined to be the same as \verb|basis{}|.
+
+ESMILES Options - \verb|xc{}|, \verb|xc_property{}| and \verb|xc_base{}|
+Only the Gaussian and plane-wave DFT programs utilize the \verb|xc{}| keyword. The default exchange correlation functional used is \verb|xc{b3lyp}|. The following exchange correlation functions are available with the Gaussian DFT and plane-wave DFT programs.
+\begin{itemize}
+   \item lda --  local density approximation (LDA) of S.J. Vosko, L. Wilk and M. Nusair, Can. J. Phys. 58, 1200 (1980)  
+   \item pbe -- The gradient corrected exchange correlation function of J.P. Perdew, K. Burke and M. Ernzerhof, Phys. Rev. Lett. 77, 3865 (1996); 78 , 1396 (1997)  
+   \item blyp -- The gradient corrected exchange correlation function A.D. Becke, Phys. Rev. A 88, 3098 (1988) and C. Lee, W. Yang and R. G. Parr, Phys. Rev. B 37, 785 (1988)  
+   \item b3lyp -- the hybrid exchange correlation function of A.D. Becke, J. Chem. Phys. 98, 5648 (1993) and C. Lee, W. Yang and R. G. Parr, Phys. Rev. B 37, 785 (1988)  
+   \item pbe0 -- the hybrid exchange correlation function of C.Adamo and V.Barone, J. Chem. Phys. 110, 6158 (1999)  
+   \item m06-2x -- the hybrid meta exchange correlation function of Y. Zhao, D. G. Truhlar, J. Chem. Phys. 125, 194101 (2006).   Only available in Gaussian DFT program
+\end{itemize}
+The \verb|xc_property{}| is an optional keyword used to specify the exchange correlation potential used in an nmr calculation, and \verb|xc_base{}| is an optional keyword used to specify the exchange correlation potential of the base calculation for an MP2 or CCSD(T) calculation. By default the \verb|xc_property| and \verb|xc_base| are defined to be the same as \verb|xc{}|.
+
+ESMILES Options - \verb|solvation_type{}|
+The default solvation type is \verb|solvation_type{COSMO}|. The following solvation types are available with the Gaussian DFT, MP2 and CCSD(T) programs.
+
+\begin{itemize}
+   \item COSMO     -- The COSMO solvation model of Klampt and Shuurman
+   \item COSMO-SMD -- The extended Minnesota COSMO solvation model of Cramer et al.
+   \item None      -- Gas-phase calculation, no solvation model included in the calculations
+\end{itemize}
+
+
+\section{Applications}
+
+
+\subsection{Periodic Builder}
+
+\section{Conclusion}
+
+We envision that our tools will be part of future closed cycles of chemical and materials discovery that requires integrated computational and experimental tools combined with materials synthesis. This approach will have great impact on Energy Hubs and EFRCs for tackling advance the missions of the DOE.  It will also have a significant impact on DOE BES, BER and ASCR (e.g. EMSL, NERSC, APS, ANL, SLAC) user facilities and users.  The number of DOE facility users is increasing steadily, and now stands well over 10,000. Most of these users lack access to advanced computational tools, because adequate user-friendly open source software or computational power is not available. Clearly, in order to extract/exploit the rich information encoded in the in experiments being carried out at DOE user facilities there is a critical need for users to have access to user-friendly computational tools. Having these tools will facilitate analyzing/interpreting various spectra and other experiments, enabling new science insights more quickly. The EMSL Arrows software tool will have a transformational impact in increasing the scientific productivity of DOE OS facilities and their users.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The "Acknowledgement" section can be given in all manuscript
+%% classes.  This should be given within the "acknowledgement"
+%% environment, which will make the correct section or running title.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{acknowledgement.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The same is true for Supporting Information, which should use the
+%% suppinfo environment.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{suppinfo}
+
+This will usually read something like: ``Experimental procedures and
+characterization data for all new compounds. The class will
+automatically add a sentence pointing to the information on-line:
+
+\end{suppinfo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% The appropriate \bibliography command should be placed here.
+%% Notice that the class file automatically sets \bibliographystyle
+%% and also names the section correctly.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliography{EMSL-Arrows}
+
+\end{document}
